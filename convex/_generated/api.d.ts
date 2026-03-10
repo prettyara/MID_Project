@@ -10,6 +10,7 @@
 
 import type * as books from "../books.js";
 import type * as events from "../events.js";
+import type * as leaderboard from "../leaderboard.js";
 import type * as quests from "../quests.js";
 import type * as reviews from "../reviews.js";
 import type * as rewards from "../rewards.js";
@@ -25,6 +26,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   books: typeof books;
   events: typeof events;
+  leaderboard: typeof leaderboard;
   quests: typeof quests;
   reviews: typeof reviews;
   rewards: typeof rewards;

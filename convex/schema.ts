@@ -2,7 +2,7 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-
+  
   users: defineTable({
     name: v.string(),
     nim: v.string(),
@@ -10,15 +10,16 @@ export default defineSchema({
     points: v.number(),
     visitCount: v.number(),
     createdAt: v.string(),
-  }).index("by_nim", ["nim"]),
-
+  })
+    .index("by_nim", ["nim"])
+    .index("by_points", ["points"]), 
   books: defineTable({
     title: v.string(),
     author: v.string(),
     faculty: v.string(),
-    status: v.string(), // available | read_only | restricted
+    status: v.string(), 
     isNew: v.boolean(),
-    source: v.string(), // BI | dosen | library
+    source: v.string(), 
     createdAt: v.string(),
   }).index("by_faculty", ["faculty"]),
 
@@ -26,7 +27,7 @@ export default defineSchema({
     title: v.string(),
     description: v.string(),
     points: v.number(),
-    type: v.string(), // visit | read | review
+    type: v.string(), 
     active: v.boolean(),
     createdAt: v.string(),
   }),
@@ -58,5 +59,4 @@ export default defineSchema({
     points: v.number(),
     createdAt: v.string(),
   }),
-
 });
