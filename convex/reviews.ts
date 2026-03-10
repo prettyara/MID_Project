@@ -1,52 +1,30 @@
+import { mutation } from "./_generated/server";
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
 
 export const addReview = mutation({
-  args: {
+  args:{
     userId: v.id("users"),
-    bookId: v.id("books"),
+    bookTitle: v.string(),
     content: v.string(),
+    type: v.string(),
   },
-  handler: async (ctx, args) => {
-    const user = await ctx.db.get(args.userId);
-    if (!user) throw new Error("User not found");
 
-    const book = await ctx.db.get(args.bookId);
-    if (!book) throw new Error("Book not found");
+  handler: async(ctx,args)=>{
 
-    const reviewPoints = 10;
-
-    const reviewId = await ctx.db.insert("reviews", {
+    await ctx.db.insert("reviews",{
       userId: args.userId,
-      bookId: args.bookId,
+      bookTitle: args.bookTitle,
       content: args.content,
-      points: reviewPoints,
-      createdAt: new Date().toISOString(),
+      type: args.type,
+      createdAt: Date.now()
     });
 
-    await ctx.db.patch(args.userId, {
-      points: user.points + reviewPoints,
+    const user = await ctx.db.get(args.userId);
+
+    await ctx.db.patch(args.userId,{
+      points: (user?.points || 0) + 20
     });
 
-    return reviewId;
-  },
-});
-
-export const getReviews = query({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.db.query("reviews").collect();
-  },
-});
-
-export const getReviewsByBook = query({
-  args: {
-    bookId: v.id("books"),
-  },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("reviews")
-      .filter((q) => q.eq(q.field("bookId"), args.bookId))
-      .collect();
-  },
+    return "Review berhasil, poin +20";
+  }
 });
