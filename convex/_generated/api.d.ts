@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as LibraryInfo from "../LibraryInfo.js";
+import type * as books from "../books.js";
 import type * as checkin from "../checkin.js";
 import type * as events from "../events.js";
 import type * as promos from "../promos.js";
@@ -24,6 +26,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  LibraryInfo: typeof LibraryInfo;
+  books: typeof books;
   checkin: typeof checkin;
   events: typeof events;
   promos: typeof promos;
